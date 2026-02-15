@@ -1,0 +1,19 @@
+# render.yaml
+services:
+  - type: web
+    name: gold-trading-bot
+    runtime: python
+    region: frankfurt  # اختر منطقة قريبة منك
+    plan: free  # أو starter للمزيد من الموارد
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app --bind 0.0.0.0:$PORT
+    healthCheckPath: /health
+    envVars:
+      - key: EXCHANGE_API_KEY
+        sync: false  # سيتم إدخالها يدوياً
+      - key: EXCHANGE_SECRET_KEY
+        sync: false
+      - key: TEST_MODE
+        value: "true"
+      - key: PYTHON_VERSION
+        value: "3.11.0"
